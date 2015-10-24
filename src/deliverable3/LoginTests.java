@@ -26,6 +26,12 @@ public class LoginTests {
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+    /*
+     * Given a correct user name and password,
+When I login,
+Then the login should be successful.
+
+     */
     @Test
     public void testLogin() throws Exception {
 	driver.get(baseUrl + "/login");
@@ -37,6 +43,13 @@ public class LoginTests {
 	assertTrue(isElementPresent(By.linkText("logout")));
     }
 
+    /*
+     * Given a user name that does exist and an incorrect password,
+When I login,
+Then the login should be unsuccessful.
+
+
+     */
     @Test
     public void testIncorrectPassword() throws Exception {
 	driver.get(baseUrl + "/login");
@@ -49,6 +62,12 @@ public class LoginTests {
 		.xpath("//form[@id='login-form']/div[2]/div/span[2]")));
     }
 
+    /*
+     * Given a user name that does not exist and a password,
+When I login,
+Then the login should be unsuccessful.
+
+     */
     @Test
     public void testIncorrectUsername() throws Exception {
 	driver.get(baseUrl + "/login");
@@ -60,7 +79,13 @@ public class LoginTests {
 	assertTrue(isElementPresent(By
 		.xpath("//form[@id='login-form']/div[2]/div/span[2]")));
     }
-    
+
+    /*
+     * Given I am logged in,
+When I click logout,
+Then I should be logged out.
+
+     */
     @Test
     public void testLogout() throws Exception{
 	driver.get(baseUrl + "/login");

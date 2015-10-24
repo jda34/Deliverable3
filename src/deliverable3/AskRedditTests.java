@@ -25,13 +25,35 @@ public class AskRedditTests {
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+    /*
+     * Given I am on /r/AskReddit,
+When I click “new”,
+Then the individual threads should be in chronological order.
+
+     */
     @Test
-    public void testBrowse() throws Exception {
+    public void testNew() throws Exception {
 	driver.get(baseUrl + "/r/AskReddit");
-	assertTrue(driver.findElement(By.cssSelector("BODY")).getText()
-		.matches("^[\\s\\S]*self\\.AskReddit[\\s\\S]*$"));
+	
+    }
+    
+    /*
+     * Given I am on /r/AskReddit,
+When I click “top”,
+Then the threads with the most upvotes should be listed first.
+
+     */
+    @Test
+    public void testTop() throws Exception {
+	
     }
 
+    /*
+     * Given I am on the front page,
+When I click “AskReddit”,
+Then I am taken to /r/AskReddit.
+
+     */
     @Test
     public void testClickAskReddit() throws Exception {
 	driver.get(baseUrl + "/");
@@ -40,6 +62,12 @@ public class AskRedditTests {
 		driver.getCurrentUrl());
     }
 
+    /*
+     * Given I am on /r/AskReddit and logged in,
+When I click “Ask a New Question”,
+Then I should be taken to a page to create a new thread.
+
+     */
     @Test
     public void testAskQuestion() throws Exception {
 	driver.get(baseUrl + "/r/AskReddit/login");
@@ -52,6 +80,12 @@ public class AskRedditTests {
 	assertTrue(isElementPresent(By.name("submit")));
     }
 
+    /*
+     * Given I am on /r/AskReddit,
+When I click “Filter posts by ‘Serious Posts’”,
+Then only posts tagged serious will be there.
+
+     */
     @Test
     public void testFilterBySerious() throws Exception {
 	driver.get(baseUrl + "/r/AskReddit/");
@@ -60,6 +94,12 @@ public class AskRedditTests {
 		driver.getCurrentUrl());
     }
     
+    /*
+     * Given I am on /r/AskReddit,
+When I click the first thread,
+Then it should take me to the thread to let me comment.
+
+     */
     @Test
     public void testCommentOnPost() throws Exception {
       driver.get(baseUrl + "/r/AskReddit");

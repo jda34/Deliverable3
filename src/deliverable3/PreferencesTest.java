@@ -24,6 +24,11 @@ public class PreferencesTest {
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+    /*
+     * Given that I am on reddit.com/prefs/friends/ and logged in,
+When I type “cs1632friend” and click add,
+Then “cs1632friend” should be listed as a friend.
+     */
     @Test
     public void testFriend() throws Exception {
 	driver.get(baseUrl + "/");
@@ -43,6 +48,12 @@ public class PreferencesTest {
 	assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("cs1632friend"));
     }
 
+    /*
+     * Given that I am logged in and on reddit.com/prefs/update/ and the upper current password field is filled in,
+When I add an email address and click save,
+Then my email address should be updated.
+
+     */
     @Test
     public void testChangeEmail() throws Exception {
 	driver.get(baseUrl + "/");
@@ -64,6 +75,12 @@ public class PreferencesTest {
 	assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("your email has been updated"));
     }
 
+    /*
+     * Given that I am logged in and on reddit.com/prefs/update/ and the lower current password field is filled in,
+When I add a new password and verify the password and click save,
+Then my password should be updated.
+
+     */
     @Test
     public void testChangePassword() throws Exception {
 	driver.get(baseUrl + "/");
@@ -87,6 +104,12 @@ public class PreferencesTest {
 	assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("your password has been updated"));
     }
 
+    /*
+     * Given that I am logged in and on reddit.com/prefs,
+When I change the language to English and click “save options”,
+Then my options should be saved and the page in English.
+
+     */
     @Test
     public void testChangeLanguage() throws Exception {
 	driver.get(baseUrl + "/");
