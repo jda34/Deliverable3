@@ -35,10 +35,36 @@ public class AskRedditTests {
     @Test
     public void testClickAskReddit() throws Exception {
 	driver.get(baseUrl + "/");
-	driver.findElement(By.cssSelector("span.selected.title")).click();
-	driver.findElement(By.linkText("AskReddit")).click();
+	driver.findElement(By.xpath("(//a[contains(text(),'AskReddit')])[2]")).click();
 	assertEquals("https://www.reddit.com/r/AskReddit/",
 		driver.getCurrentUrl());
+    }
+
+    @Test
+    public void testAskQuestion() throws Exception {
+	driver.get(baseUrl + "/r/AskReddit/login");
+	driver.findElement(By.id("user_login")).clear();
+	driver.findElement(By.id("user_login")).sendKeys("CS1632");
+	driver.findElement(By.id("passwd_login")).clear();
+	driver.findElement(By.id("passwd_login")).sendKeys("cs1632");
+	driver.findElement(By.xpath("(//button[@type='submit'])[2]")).click();
+	driver.findElement(By.linkText("Ask A New Question")).click();
+	assertTrue(isElementPresent(By.name("submit")));
+    }
+
+    @Test
+    public void testFilterBySerious() throws Exception {
+	driver.get(baseUrl + "/r/AskReddit/");
+	driver.findElement(By.linkText("Serious posts")).click();
+	assertEquals("https://dg.reddit.com/r/AskReddit/#dg",
+		driver.getCurrentUrl());
+    }
+    
+    @Test
+    public void testCommentOnPost() throws Exception {
+      driver.get(baseUrl + "/r/AskReddit");
+      driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]")).click();
+      assertTrue(isElementPresent(By.cssSelector("button.save")));
     }
 
     @After
