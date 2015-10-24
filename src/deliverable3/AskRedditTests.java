@@ -111,8 +111,19 @@ Then it should take me to the thread to let me comment.
      */
     @Test
     public void testCommentOnPost() throws Exception {
-	driver.get(baseUrl + "/r/AskReddit");
-	driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]")).click();
+
+	// Login
+	driver.get(baseUrl + "/r/AskReddit/login");
+	driver.findElement(By.id("user_login")).clear();
+	driver.findElement(By.id("user_login")).sendKeys("CS1632");
+	driver.findElement(By.id("passwd_login")).clear();
+	driver.findElement(By.id("passwd_login")).sendKeys("cs1632");
+	driver.findElement(By.xpath("(//button[@type='submit'])[2]")).click();
+
+	// Click first post
+	driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]"))
+		.click();
+
 	assertTrue(isElementPresent(By.cssSelector("button.save")));
     }
 
