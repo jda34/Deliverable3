@@ -25,6 +25,12 @@ public class DiscoverSubredditsTests {
 	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
+
+    /*
+     * Given I am on /r/pitt and I am not subscribed and I am not logged in,
+     * When I click subscribe,
+     * It should tell me to login.
+     */
     @Test
     public void testSubscribeNotLoggedIn() throws Exception {
 	driver.get(baseUrl + "/r/pitt");
@@ -47,6 +53,11 @@ public class DiscoverSubredditsTests {
 			"You need to be logged in to subscribe to subreddits."));
     }
 
+    /*
+     * Given I am on /r/pitt and I am not subscribed and I am logged in,
+     * When I click subscribe,
+     * I should now be subscribed.
+     */
     @Test
     public void testSubscribe() throws Exception {
 	driver.get(baseUrl + "/r/pitt/login");
@@ -66,6 +77,11 @@ public class DiscoverSubredditsTests {
 	assertTrue(isElementPresent(By.linkText("unsubscribe")));
     }
 
+    /*
+     * Given I am on /r/pitt and I am subscribed and I am logged in,
+     * When I click Unsubscribe,
+     * I should now not be subscribed.
+    */
     @Test
     public void testUnsubscribe() throws Exception {
 	driver.get(baseUrl + "/r/pitt/login");
@@ -85,6 +101,11 @@ public class DiscoverSubredditsTests {
 	assertTrue(isElementPresent(By.linkText("subscribe")));
     }
 
+    /*
+     * Given I am on the front page and logged on,
+     * When I click “create” under multireddits and type “Pitt” and “Pittsburgh” under “add subreddit”,
+     * The page should now contain post from /r/Pitt and /r/Pittsburgh.
+     */
     @Test
     public void testCreateMultiReddit() throws Exception {
 	// Login
@@ -123,6 +144,11 @@ public class DiscoverSubredditsTests {
 	driver.findElement(By.cssSelector("button.yes")).click();
     }
 
+    /*
+     * Given I am on the front page
+     * When I click on “ALL”,
+     * I should go to a page with content from all of reddit, not just my subscriptions.
+     */
     @Test
     public void testViewAll() throws Exception {
 	driver.get(baseUrl + "/");
@@ -130,6 +156,11 @@ public class DiscoverSubredditsTests {
 	assertEquals("https://www.reddit.com/r/all", driver.getCurrentUrl());
     }
 
+    /*
+     * Given I am on reddit.com/subreddits and logged on,
+     * When I click on “What are you interested in?” and type in “retail” and click “/r/TalesFromRetail”,
+     * A new page should take me to /r/TalesFromRetail.
+     */
     @Test
     public void testFindNewSubreddit() throws Exception {
 	driver.get(baseUrl + "/subreddits");
