@@ -2,6 +2,9 @@ package deliverable3;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -25,6 +28,17 @@ public class AskRedditTests {
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+
+    private static Date parseRedditDate(String dateStr) {
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	try {
+	    return dateFormat.parse(dateStr);
+	} catch (ParseException e) {
+	    return null;
+	}
+    }
+    
+    
     /*
      * Given I am on /r/AskReddit,
 When I click “new”,
@@ -33,9 +47,14 @@ Then the individual threads should be in chronological order.
      */
     @Test
     public void testNew() throws Exception {
-	driver.get(baseUrl + "/r/AskReddit");
+	driver.get(baseUrl + "/r/AskReddit/new");
+	String d1 = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[1]/div[2]/p[2]/time")).getAttribute("datetime");
+	String d2 = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[3]/div[2]/p[2]/time")).getAttribute("datetime");
 
-
+	Date date1 = parseRedditDate(d1);
+	Date date2 = parseRedditDate(d2);
+	assertTrue(date1.after(date2));
+	
 
     }
 
@@ -122,7 +141,7 @@ Then it should take me to the thread to let me comment.
 
 	// Click first post
 	driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]"))
-		.click();
+	.click();
 
 	assertTrue(isElementPresent(By.cssSelector("button.save")));
     }
