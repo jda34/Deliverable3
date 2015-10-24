@@ -60,6 +60,18 @@ public class LoginTests {
 	assertTrue(isElementPresent(By
 		.xpath("//form[@id='login-form']/div[2]/div/span[2]")));
     }
+    
+    @Test
+    public void testLogout() throws Exception{
+	driver.get(baseUrl + "/login");
+	driver.findElement(By.id("user_login")).clear();
+	driver.findElement(By.id("user_login")).sendKeys("CS1632");
+	driver.findElement(By.id("passwd_login")).clear();
+	driver.findElement(By.id("passwd_login")).sendKeys("cs1632");
+	driver.findElement(By.xpath("(//button[@type='submit'])[2]")).click();
+	driver.findElement(By.linkText("logout")).click();
+	assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Want to join[\\s\\S] [\\s\\S]*$"));	
+    }
 
     @After
     public void tearDown() throws Exception {
