@@ -34,9 +34,11 @@ Then the individual threads should be in chronological order.
     @Test
     public void testNew() throws Exception {
 	driver.get(baseUrl + "/r/AskReddit");
-	
+
+
+
     }
-    
+
     /*
      * Given I am on /r/AskReddit,
 When I click “top”,
@@ -45,7 +47,14 @@ Then the threads with the most upvotes should be listed first.
      */
     @Test
     public void testTop() throws Exception {
-	
+
+	//div[contains(@class, 'unvoted')]/text()
+	driver.get(baseUrl + "/r/askreddit/top");
+	String s1 = driver.findElement(By.xpath("/html/body/div[3]/div[3]/div/div[1]/div[1]/div[3]")).getText();
+	String s2 = driver.findElement(By.xpath("/html/body/div[3]/div[3]/div/div[3]/div[1]/div[3]")).getText();
+	int n1 = Integer.parseInt(s1);
+	int n2 = Integer.parseInt(s2);
+	assertTrue(n1>=n2);
     }
 
     /*
@@ -93,7 +102,7 @@ Then only posts tagged serious will be there.
 	assertEquals("https://dg.reddit.com/r/AskReddit/#dg",
 		driver.getCurrentUrl());
     }
-    
+
     /*
      * Given I am on /r/AskReddit,
 When I click the first thread,
@@ -102,9 +111,9 @@ Then it should take me to the thread to let me comment.
      */
     @Test
     public void testCommentOnPost() throws Exception {
-      driver.get(baseUrl + "/r/AskReddit");
-      driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]")).click();
-      assertTrue(isElementPresent(By.cssSelector("button.save")));
+	driver.get(baseUrl + "/r/AskReddit");
+	driver.findElement(By.xpath("(//a[contains(@href,'comments')])[1]")).click();
+	assertTrue(isElementPresent(By.cssSelector("button.save")));
     }
 
     @After
